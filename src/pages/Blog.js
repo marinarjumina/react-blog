@@ -1,28 +1,12 @@
 import React, { useState, useEffect } from "react"
 import Axios from "axios"
 
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Loader from './components/Loader'
-import PostsList from './components/PostsList'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import Loader from '../components/Loader'
+import PostsList from '../components/PostsList'
 
-const Layout = ({children}) => {
-  return (
-    <div className="min-h-screen flex-1 bg-gray-200 p-4 flex justify-center items-center">
-      {children}
-    </div>
-  )
-}
-
-const Card = ({children}) => {
-  return (
-    <div className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg">
-      {children}
-    </div>
-  )
-}
-
-const App = () => {
+const Blog = () => {
   const [postsLoaded, setPostsLoaded] = useState(false)
   const [posts, setPosts] = useState([])
 
@@ -35,24 +19,27 @@ const App = () => {
     });
   }
 
-  const deletePost = (idx) => {
+  const deletePost = (e, idx) => {
     const selectedItem = posts[idx]
     const detectPost = posts.filter((item) => item !== selectedItem)
     setPosts(detectPost)
+
+    e.preventDefault()
+    e.stopPropagation()
   }
 
   useEffect(() => getPosts(), [setPosts])
 
   return (
-    <Layout>
-      <Card>
+    <>
+      <div className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg">
         <Header />
         <PostsList posts={posts} deletePost={deletePost} postsLoaded={postsLoaded} />
         <Loader loading={postsLoaded} />
-        <Footer getPosts={getPosts}/>
-      </Card>
-    </Layout>
-  );
+        <Footer getPosts={getPosts} />
+      </div>
+    </>
+  )
 }
 
-export default App
+export default Blog
