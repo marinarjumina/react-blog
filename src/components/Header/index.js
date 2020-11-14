@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import logo from '../../images/logo.svg'
+import logo from "../../images/logo.svg";
 
 const Header = () => {
   return (
@@ -10,14 +10,16 @@ const Header = () => {
         <h1 className="text-2xl font-semibold text-gray-600">React blog</h1>
       </div>
       <div className="flex flex-col items-end pb-3">
-        <h5 className="text-sm font-semibold text-gray-600 pb-1">Posts read:</h5>
+        <h5 className="text-sm font-semibold text-gray-600 pb-1">
+          Posts read:
+        </h5>
         <div className="flex flex-col items-end pr-1">
           <p className="text-xs font-semibold text-gray-500">1 daily</p>
           <p className="text-xs font-semibold text-gray-500">1 weekly</p>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
