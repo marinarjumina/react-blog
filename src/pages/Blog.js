@@ -7,6 +7,8 @@ import Loader from "../components/Loader";
 import PostsList, { EmptyPostsLists } from "../components/PostsList";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
+const POST_LIMIT = 5;
+
 const Blog = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useLocalStorageState("posts");
@@ -26,7 +28,7 @@ const Blog = () => {
       const { data = {} } = await axios.get(
         "https://techcrunch.com/wp-json/wp/v2/posts"
       );
-      const result = data.slice(0, 5);
+      const result = data.slice(0, POST_LIMIT);
 
       setPosts(result);
       setIsLoading(false);
@@ -36,6 +38,7 @@ const Blog = () => {
   }, [setPosts]);
 
   const hasPosts = posts && posts.length > 0;
+  const isLoadMoreShown = posts.length < POST_LIMIT;
 
   return (
     <>
@@ -46,7 +49,7 @@ const Blog = () => {
         {!isLoading && hasPosts && (
           <PostsList posts={posts} deletePost={deletePost} />
         )}
-        <Footer />
+        {isLoadMoreShown && <Footer />}
       </div>
     </>
   );
