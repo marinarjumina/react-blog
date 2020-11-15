@@ -19,7 +19,7 @@ export const getWeeklyStats = (stats) => {
   const weekEnd = moment().endOf("isoWeek");
 
   const pickDailyStats = ([recordKey, dailyStats]) => {
-    if (moment(recordKey).isBetween(weekStart, weekEnd)) {
+    if (moment(recordKey).isBetween(weekStart, weekEnd, undefined, "[]")) {
       return dailyStats;
     }
   };
