@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { isEmpty } from "lodash";
+import { getPostById, updateStats } from "../utils";
 
 const Post = () => {
   const { id } = useParams();
-  const [post, setPost] = useState(null);
+  const [posts] = useLocalStorageState("posts");
+  const [stats, setStats] = useLocalStorageState("stats", {});
+  const post = getPostById(posts, id);
 
   useEffect(() => {
-    const getPost = async () => {
-      const { data = {} } = await axios.get(
-        `https://techcrunch.com/wp-json/wp/v2/posts/${id}`
-      );
-      setPost(data);
-    };
+    if (!isEmpty(post)) {
+      const newStats = updateStats(stats, post.id);
+      setStats(newStats);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    getPost();
-  }, [id]);
+  if (isEmpty(post)) {
+    return null;
+  }
 
   return (
-    <>
-      {post && (
-        <div
-          className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-        />
-      )}
-    </>
+    <div
+      className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg"
+      dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+    />
   );
 };
 

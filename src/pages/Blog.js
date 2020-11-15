@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import PostsList, { EmptyPostsLists } from "../components/PostsList";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { getPostById } from "../utils";
 
 const POST_LIMIT = 5;
 
@@ -13,10 +14,10 @@ const Blog = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useLocalStorageState("posts");
 
-  const deletePost = (e, idx) => {
-    const selectedItem = posts[idx];
-    const detectPost = posts.filter((item) => item !== selectedItem);
-    setPosts(detectPost);
+  const deletePost = (e, postId) => {
+    const foundPost = getPostById(posts, postId);
+    const newPosts = posts.filter((post) => post.id !== foundPost.id);
+    setPosts(newPosts);
 
     e.preventDefault();
     e.stopPropagation();
@@ -25,16 +26,17 @@ const Blog = () => {
   useEffect(() => {
     const getPosts = async () => {
       setIsLoading(true);
-      const { data = {} } = await axios.get(
-        "https://techcrunch.com/wp-json/wp/v2/posts"
-      );
+      const { data = {} } = await axios.get("https://techcrunch.com/wp-json/wp/v2/posts");
       const result = data.slice(0, POST_LIMIT);
 
       setPosts(result);
-      setIsLoading(false);
     };
 
-    getPosts();
+    if (!posts) {
+      getPosts();
+    }
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPosts]);
 
   const hasPosts = posts && posts.length > 0;
@@ -46,9 +48,7 @@ const Blog = () => {
         <Header />
         {isLoading && <Loader />}
         {!isLoading && !hasPosts && <EmptyPostsLists />}
-        {!isLoading && hasPosts && (
-          <PostsList posts={posts} deletePost={deletePost} />
-        )}
+        {!isLoading && hasPosts && <PostsList posts={posts} deletePost={deletePost} />}
         {isLoadMoreShown && <Footer />}
       </div>
     </>
