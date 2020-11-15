@@ -9,7 +9,7 @@ const Header = () => {
   const weeklyStats = getWeeklyStats(stats);
 
   return (
-    <div className="h-20 flex justify-between items-center border-b border-gray-200 my-4 mx-6">
+    <div className="h-20 flex justify-between items-center border-b border-gray-200 mt-4 mx-6">
       <div className="flex items-center">
         <img src={logo} className="h-16 w-16" alt="logo" />
         <h1 className="text-2xl font-semibold text-gray-600">React blog</h1>

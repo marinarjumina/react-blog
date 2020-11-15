@@ -2,21 +2,14 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div className="text-base font-semibold text-gray-600 p-4 my-3 flex justify-center items-center">
+    <div className="text-base font-semibold text-gray-600 p-4 mt-3 mb-4 flex justify-center items-center">
       <svg
         className="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
       >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
         <path
           className="opacity-75"
           fill="currentColor"

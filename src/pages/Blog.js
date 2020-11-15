@@ -30,9 +30,7 @@ const Blog = () => {
     if (!isInLocalStorage || fetchMore) {
       getPosts();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setPosts, fetchMore]);
+  }, [fetchMore, setPosts]);
 
   const deletePost = (e, postId) => {
     const foundPost = getPostById(posts, postId);
@@ -47,15 +45,13 @@ const Blog = () => {
   const isLoadMoreShown = posts.length < POST_LIMIT;
 
   return (
-    <>
-      <div className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg">
-        <Header />
-        {isLoading && <Loader />}
-        {!isLoading && !hasPosts && <EmptyPostsLists />}
-        {!isLoading && hasPosts && <PostsList posts={posts} deletePost={deletePost} />}
-        {isLoadMoreShown && <Footer isLoading={isLoading} setFetchMore={() => setFetchMore(true)} />}
-      </div>
-    </>
+    <div className="bg-white w-full md:max-w-5xl rounded-3xl shadow-lg">
+      <Header />
+      {isLoading && <Loader />}
+      {!isLoading && !hasPosts && <EmptyPostsLists />}
+      {!isLoading && hasPosts && <PostsList posts={posts} deletePost={deletePost} />}
+      {isLoadMoreShown && <Footer isLoading={isLoading} setFetchMore={() => setFetchMore(true)} />}
+    </div>
   );
 };
 

@@ -9,13 +9,13 @@ const PostItem = ({ post, index, deletePost }) => {
   const isRead = isPostRead(stats, post.id);
 
   return (
-    <Link to={url} className="flex justify-start items-center h-16 px-4 my-3 rounded-lg border border-gray-100 shadow">
+    <Link to={url} className="flex justify-start items-center p-4 my-3 rounded-lg border border-gray-100 shadow">
       <div className="mr-4">
         {isRead && <div className="p-2 bg-teal-400 text-xs text-white font-bold uppercase rounded-lg">Read</div>}
       </div>
       <div className="flex justify-between items-center w-full">
         <div
-          className="text-base font-semibold text-gray-600 cursor-pointer"
+          className="text-base font-semibold text-gray-600 cursor-pointer pr-4"
           dangerouslySetInnerHTML={{ __html: post.title.rendered }}
         />
         {isRead && (
@@ -41,7 +41,7 @@ const PostItem = ({ post, index, deletePost }) => {
 
 export const EmptyPostsLists = () => {
   return (
-    <div className="text-base font-semibold text-gray-600 p-4 my-3 flex justify-center">
+    <div className="text-base font-semibold text-gray-600 px-6 py-4 mt-3 mb-4 flex justify-center text-center">
       Ups... the list in empty, press 'Get new posts!' button to get a new bunch of the fresh posts
     </div>
   );
@@ -49,7 +49,7 @@ export const EmptyPostsLists = () => {
 
 const PostsList = ({ posts, deletePost }) => {
   return (
-    <div className="px-6">
+    <div className="px-6 py-4">
       {posts.map((post, idx) => {
         return <PostItem key={post.id} post={post} index={idx} deletePost={deletePost} />;
       })}
