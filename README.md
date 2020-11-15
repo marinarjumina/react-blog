@@ -1,6 +1,6 @@
 # LIVE DEMO
 
-[Live demo you can find here:](https://thirsty-knuth-35e503.netlify.app/)
+Live demo you can find here: [https://thirsty-knuth-35e503.netlify.app/](https://thirsty-knuth-35e503.netlify.app/)
 
 # Getting Started with Create React App
 
