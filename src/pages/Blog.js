@@ -11,7 +11,7 @@ import { getPostById } from "../utils";
 const POST_LIMIT = 5;
 
 const Blog = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useLocalStorageState("posts");
   const [fetchMore, setFetchMore] = useState(false);
 
@@ -20,9 +20,9 @@ const Blog = () => {
       setIsLoading(true);
       const { data = {} } = await axios.get("https://techcrunch.com/wp-json/wp/v2/posts");
       const result = data.slice(0, POST_LIMIT);
-
-      setPosts(result);
       setFetchMore(false);
+      setPosts(result);
+      setIsLoading(false);
     };
 
     const isInLocalStorage = JSON.parse(window.localStorage.getItem("posts"));
@@ -30,8 +30,6 @@ const Blog = () => {
     if (!isInLocalStorage || fetchMore) {
       getPosts();
     }
-
-    setIsLoading(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPosts, fetchMore]);
@@ -45,7 +43,7 @@ const Blog = () => {
     e.stopPropagation();
   };
 
-  const hasPosts = posts && posts.length > 0;
+  const hasPosts = posts.length > 0;
   const isLoadMoreShown = posts.length < POST_LIMIT;
 
   return (
